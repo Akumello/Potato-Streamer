@@ -9,5 +9,4 @@ public class PotatoStreamerApplication
 	public static void main(String[] args) {
 		SpringApplication.run(PotatoStreamerApplication.class, args);
 	}
-	
 }

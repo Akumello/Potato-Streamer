@@ -18,6 +18,7 @@ public class AudioFile implements Runnable
 	String path;
 	MP3File file = null;
 	int pauseLoc = 0;
+	Thread bgPlayer;
 	FileInputStream in = null;
     AdvancedPlayer player = null;
 	
@@ -44,7 +45,8 @@ public class AudioFile implements Runnable
 	
 	public void play()
 	{
-		run();
+		bgPlayer = new Thread(this);
+		bgPlayer.start();
 	}
 
 	@Override

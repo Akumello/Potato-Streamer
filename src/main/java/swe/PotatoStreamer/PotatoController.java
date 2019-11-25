@@ -45,7 +45,7 @@ public class PotatoController
     	else
     		System.out.println("Unable to authenticate.");
     	
-    	/*/
+    	//*/
     	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
     	afile.play();
