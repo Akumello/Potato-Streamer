@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmls:th="localhost:8080">
+<head>
+  <title>potatostreamer/home</title>
+  <meta http-equiv="Content-Type" content="text/html; charset = UTF-8" />
+</head>
+<body>
+  <h1>Welcome to PotatoStreamer!</h1>
+  <p>
+    A "cutting-edge" web-app for music storage and streaming on the cloud.
+  </p>
+  <hr/>
+
+  <h2>Log in or create an account</h2>
+  <hr/>
+
+  <article>
+    <section>
+      <h3>Create Account</h3>
+      <form action="#" th:action="@{/home}" th:object="${newUser}" method="post" onsubmit="myFunction1()">
+        <p>New Username:</p>
+        <input type="text" th:field="*{id}" required/><br/>
+        <p>Password:</p>
+        <input type="password" th:field="*{pwd}" required/><br/><br/>
+        <input type="submit" value="Create Account" />
+      </form>
+      
+      <!--  somehow make conditional -->
+      <script>
+		function myFunction1() {
+  			alert("Account creation successful! Please log in as an existing user.");
+		}
+	  </script>
+	  
+    </section>
+  </article>
+  <hr/><hr>
+  
+  <article>
+    <section>
+      <h3>Existing Users</h3>
+      <form action="#" th:action="@{/library}" th:object="${existingUser}" method="post" onsubmit="myFunction2()">
+        <p>Username:</p>
+        <input type="text" th:field="*{id}" required/><br/>
+        <p>Password:</p>
+        <input type="password" th:field="*{pwd}" required/><br/><br/>
+        <input type="submit" value="Confirm" />
+      </form>
+      
+      <!--  somehow make conditional -->
+      <script>
+		function myFunction2() {
+  			alert("Invalid login credentials.");
+		}
+	  </script>
+	  
+    </section>
+  </article>
+</body>
+</html>

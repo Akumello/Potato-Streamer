@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmls:th="http://www.thymeleaf.org">
+<head>
+  <title>potatostreamer/register</title>
+  <meta http-equiv="Content-Type" content="text/html; charset = UTF-8" />
+</head>
+<body>
+  <h1>Welcome to PotatoStreamer!</h1>
+  <p>
+    A "cutting-edge" web-app for music storage and streaming on the cloud.
+  </p>
+  <hr/>
+  <nav>
+    <ul>
+        <li><a href="/home">Login</a></li>
+    </ul>
+  </nav>
+  <hr/>
+
+<article>
+    <section>
+      <h3>Create Account</h3>
+      <form action="#" th:action="@{/home}" th:object="${newUser}" method="post" onsubmit="myFunction1()">
+        <p>New Username:</p>
+        <input type="text" th:field="*{id}" required/><br/>
+        <p>Password:</p>
+        <input type="password" th:field="*{pwd}" required/><br/><br/>
+        <input type="submit" value="Create Account" />
+      </form>
+      
+      <!--  somehow make conditional -->
+      <script>
+		function myFunction1() {
+  			alert("Account creation successful! Please log in as an existing user.");
+		}
+	  </script>
+	  
+    </section>
+  </article>
+  <hr/><hr>
+  
+</body>
+</html>
