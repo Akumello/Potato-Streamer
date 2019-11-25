@@ -23,9 +23,10 @@ public class PotatoController
 {	
 	User newUser = new User();
 	User existingUser = new User();
+	private String result = "";
 	
     @RequestMapping(value = "/")
-    public String setupDataBase(Model model)
+    public String testing(Model model)
     {	
     	//*/
        	try 
@@ -71,11 +72,13 @@ public class PotatoController
     
     @PostMapping("/home")
     public String homeLogic(@ModelAttribute("existingUser") User existingUser, Model model) throws SQLException {
-    	if(DBInteract.authenticate(existingUser.getId(), existingUser.getPwd())) {
-    		return "home";
-    	}
     	
-    	return "home";
+    	if(DBInteract.authenticate(existingUser.getId(), existingUser.getPwd())) {
+    		return libraryRender(existingUser, model);
+    	}
+    	result = "Invalid login credentials.";
+    	model.addAttribute("result", result);
+    	return homeRender(model);
     }
     
     
@@ -83,8 +86,6 @@ public class PotatoController
     public String registerRender(Model model)
     {
     	model.addAttribute("newUser", newUser);
-    	// check data, should be null
-    	System.out.println("new: " + newUser.getId() + " || " + newUser.getPwd());
     	
     	return "register";
     }
@@ -92,22 +93,21 @@ public class PotatoController
     @PostMapping("/register")
     public String registerLogic(@ModelAttribute("newUser") User newUser, Model model) throws SQLException
     {
-    	// check data, should be good data things
-    	System.out.println("new: " + newUser.getId() + " || " + newUser.getPwd());
-    	DBInteract.addUser(newUser.getId(), newUser.getPwd());
+    	if(DBInteract.addUser(newUser.getId(), newUser.getPwd())) {
+    		result = "Registration success! Return to login.";
+    		model.addAttribute("result", result);
+    	} else {
+    		result = "Registration failed. Username already in use.";
+    		model.addAttribute("result", result);
+    	}
     	
-    	return homeLogic(newUser, model);
+    	return "register";
     }
     
    // If existing user reaching library for first time
     @GetMapping("/library")
     public String libraryRender(@ModelAttribute User existingUser, Model model) throws SQLException
     {
-    	System.out.println("check: " + existingUser.getId() + " || " + existingUser.getPwd());
-    	if(DBInteract.authenticate(existingUser.getId(), existingUser.getPwd()) == false) {
-    		// incorrect info error display
-    		return homeRender(model);
-    	};
     	return "library";
     }
     

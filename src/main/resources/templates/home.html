@@ -23,22 +23,17 @@
   <article>
     <section>
       <h3>Existing Users</h3>
-      <form action="#" th:action="@{/library}" th:object="${existingUser}" method="post" onsubmit="myFunction2()">
+      <form action="#" th:action="@{/home}" th:object="${existingUser}" method="post" onsubmit="myFunction2()">
         <p>Username:</p>
         <input type="text" th:field="*{id}" required/><br/>
         <p>Password:</p>
         <input type="password" th:field="*{pwd}" required/><br/><br/>
         <input type="submit" value="Confirm" />
       </form>
-      
-      <!-- somehow make conditional -->
-      <script>
-		function myFunction2() {
-  			alert("Invalid login credentials.");
-		}
-	  </script>
-	  
     </section>
   </article>
+  
+  <p th:text="${result}" />
+  
 </body>
 </html>
