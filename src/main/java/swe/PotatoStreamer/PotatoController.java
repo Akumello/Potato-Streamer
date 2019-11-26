@@ -25,10 +25,6 @@ public class PotatoController
 	User existingUser = new User();
 	DBInteract conn = null;
 	private String result = "";
-	public PotatoController() throws SQLException {
-		conn.makeConn();
-	}
-	
     @RequestMapping(value = "/")
     public String testing(Model model)
     {	
@@ -36,8 +32,9 @@ public class PotatoController
        	try 
        	{
     		conn.makeConn();
-        	conn.addUser("Michael", "password1");
-        	conn.printAllUsers();
+//    		conn.dbSetup();
+//        	conn.addUser("Michael", "password1");
+//        	conn.printAllUsers();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block

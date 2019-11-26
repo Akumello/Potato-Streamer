@@ -224,6 +224,14 @@ public class DBInteract{
   		return conn;
   	}
   	
+  	try {
+  		Class.forName("com.mysql.jdbc.Driver");
+  	}
+  	catch(ClassNotFoundException e) {
+  		System.out.println("CLASS FIND DIDN'T WORK");
+  		e.printStackTrace();
+  		return null;
+  	}
     try {
       /**
        * 
@@ -238,6 +246,7 @@ public class DBInteract{
         return conn;
       }
     } catch (Exception e) {
+    	System.out.println("connection failed\n\n\n");
       e.printStackTrace();
     }
 
