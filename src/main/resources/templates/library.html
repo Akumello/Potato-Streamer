@@ -4,7 +4,7 @@
   <title>potatostreamer/library</title>
   <meta charset = "UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <style>
   	table,th,tr,td
   	{
@@ -23,36 +23,26 @@
     </ul>
   </nav>
   <hr/>
-  
+
   <table>
   	<tr>
-  		<th>Listen</th>
+  		<th>Play</th>
+  		<th>Pause</th>
+  		<th>Track</th>
   		<th>Title</th>
   		<th>Artist</th>
   		<th>Album</th>
-  		<!--  <th>username</th>
-  		<th>pwd</th>-->
   	</tr>
-  	<tr th:each = "song: ${audioFiles}">
-  	
-  		<td><audio controls="controls" id="myAudio">
-  			<source src="" type="audio/mpeg"></source>
+  	<tr th:each = "song: ${songs}">
+  		<!--<audio id="myAudio">
+  			<source src="${song.path}" type="audio/mpeg">
   		</audio>
-  		
-  		<script>
-  			var x = document.getElementById("myAudio"); 
-
-  			function playAudio() { 
-  		 	 x.play(); 
-  			} 
-
-  			function pauseAudio() { 
-  		 	 x.pause(); 
-  			} 
-  		</script></td>
-  		<td th:text="${song.title}"&nbsp;></td>
-  		<td th:text="${song.artist}"&nbsp;></td>
-  		<td th:text="${song.album}"&nbsp;></td>
+  		<button onclick="playAudio()" type="button">Play</button>
+  		<button onclick="pauseAudio()" type="button">Pause</button>-->
+  		<td th:text="${song.track}">&nbsp;</td>
+  		<td th:text="${song.title}">&nbsp;</td>
+  		<td th:text="${song.artist}">&nbsp;</td>
+  		<td th:text="${song.album}">&nbsp;</td>
   	</tr>
   </table>
 </body>

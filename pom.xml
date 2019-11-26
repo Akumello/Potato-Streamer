@@ -19,7 +19,6 @@
 		<spring-cloud.version>Hoxton.RC2</spring-cloud.version>
 	</properties>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

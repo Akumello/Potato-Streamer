@@ -41,9 +41,10 @@ public class AudioFile
     	UNSTARTED,
     	PLAYING,
     	PAUSED,
-    	FINISHED 
+    	FINISHED
     };
     private static PlayState playState;
+<<<<<<< HEAD
 
 	public AudioFile(String title, String artist, String album, String path)
 	{
@@ -55,6 +56,10 @@ public class AudioFile
     
 
 	public AudioFile(String path) throws JavaLayerException
+=======
+	
+	public AudioFile(String path)
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 	{
 		try
 		{
@@ -68,6 +73,7 @@ public class AudioFile
 		    player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
 
 			
+<<<<<<< HEAD
 			System.out.println(file.hasID3v2Tag());
 			
 			if(file.hasID3v1Tag()) 
@@ -88,10 +94,16 @@ public class AudioFile
 			if(song.getTitle().isEmpty()) song.setTitle("Unknown");
 			if(song.getArtist().isEmpty()) song.setArtist("Unknown");
 			if(song.getAlbum().isEmpty()) song.setAlbum("Unknown");
+=======
+			// Fill in song metadata properties
+			title = file.getID3v1Tag().getTitle();
+			album = file.getID3v1Tag().getAlbum();
+			artist = file.getID3v1Tag().getArtist();
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 			
-		    //String uriString = new File(path).toURI().toString();
+		    String uriString = new File(path).toURI().toString();
 			//in = new FileInputStream(path);
-		     
+		    
 
 		} 
 		catch (IOException | TagException e) {

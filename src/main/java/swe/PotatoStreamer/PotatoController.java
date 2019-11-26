@@ -1,6 +1,5 @@
 package swe.PotatoStreamer;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -10,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -20,7 +17,6 @@ import javazoom.jl.decoder.JavaLayerException;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 
 
@@ -34,37 +30,30 @@ public class PotatoController
 	private String result = "";
 	
     @RequestMapping(value = "/")
-    public String manuallyFillDatabase(Model model) throws Exception
-    {	    	
-    	// ########## ADD USERS ###############
+    public String testing(Model model) throws InterruptedException
+    {	
+    	/*/
        	try 
        	{
     		DBInteract.makeConn();
-        	DBInteract.addUser("John", "password");
         	DBInteract.addUser("Michael", "password1");
-        	DBInteract.addUser("Todd", "password2");
-        	DBInteract.addUser("Jeffrey", "password3");
-        	DBInteract.printAllUsers();
+        	DBInteract.getUserArray();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     	
-    	// ########## AUTHENTICATION ###############
-    	if(DBInteract.authenticate("Todd", "password2"))
-    	{
-    		existingUser = DBInteract.getUser("Todd");
+    	if(DBInteract.authenticate("Michael", "password1"))
     		System.out.println("Authentication successful!");
-    	}
     	else
     		System.out.println("Unable to authenticate.");
     	
-    	
-    	// ########## ADD MUSIC ###############
-    	String mp3Path = "/Users/Michael/01 Birds.mp3";
+    	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
+    	//*/
     	
+<<<<<<< HEAD
     	try {
 			DBInteract.addNewMusic(existingUser.getId(), afile.song.getTitle(), afile.song.getArtist(), afile.song.getAlbum(), afile.song.getPath());
 		} catch (Exception e) {
@@ -95,6 +84,10 @@ public class PotatoController
 
     	
     	
+=======
+    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	AudioFile afile = new AudioFile(mp3Path);
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     	
     	
     	//*/
@@ -104,7 +97,7 @@ public class PotatoController
     @GetMapping("/home")
     public String homeRender(Model model) 
     {
-       	try
+       	try 
        	{
     		DBInteract.makeConn();
     	} catch (SQLException e) 
@@ -156,11 +149,18 @@ public class PotatoController
     @GetMapping("/library")
     public String libraryRender(@ModelAttribute User existingUser, Model model) throws SQLException
     {
+<<<<<<< HEAD
     	ArrayList<AudioFile> audioFiles = DBInteract.getMusicArray(existingUser.getId());
     	for (AudioFile audioFile : audioFiles) {
 			System.out.println(audioFile.song.getArtist() + " " + audioFile.song.getTitle() + " " + audioFile.song.getPath());
 		}
     	
+=======
+    	String mp3Path = "C:\\Users\\Horizon.mp3";
+    	AudioFile afile = new AudioFile(mp3Path);
+    	ArrayList<AudioFile> audioFiles = new ArrayList<AudioFile>();
+    	audioFiles.add(afile);
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     	model.addAttribute("audioFiles", audioFiles);
     	
     	return "library";
@@ -174,16 +174,11 @@ public class PotatoController
     	
     	return "library";
     }
-
-    @GetMapping(value = "/upload")
+    
+    @RequestMapping(value = "/upload")
     public String uploadRender(Model model)
     {
-    	return "upload";
-    }
-    
-    @PostMapping(value = "/upload")
-    public String uploadLogic(@RequestParam("myFile") MultipartFile uploaded, RedirectAttributes redirect)
-    {
+<<<<<<< HEAD
     	System.out.println("myFile = " + uploaded.getOriginalFilename());
      File nefw = new File("");
 		//String filename = StringUtils.cleanPath(uploaded.getOriginalFilename());
@@ -204,6 +199,11 @@ public class PotatoController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+=======
+    	AudioFile newFile = new AudioFile("");
+    	
+    	model.addAttribute("myFile", newFile);
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     	
     	return "upload";
     }
