@@ -49,10 +49,11 @@ public class PotatoController
     	//*/
     	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
-    	//afile.play();
-    	//Thread.sleep(5000);
-    	//afile.play();
-    	//Thread.sleep(5000);
+    	afile.play();
+    	Thread.sleep(5000);
+    	afile.stop();
+    	Thread.sleep(2000);
+    	afile.play();
     	
     	
     	//*/
@@ -114,7 +115,7 @@ public class PotatoController
     @GetMapping("/library")
     public String libraryRender(@ModelAttribute User existingUser, Model model) throws SQLException
     {
-    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	String mp3Path = "C:\\Users\\Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
     	ArrayList<AudioFile> audioFiles = new ArrayList<AudioFile>();
     	audioFiles.add(afile);

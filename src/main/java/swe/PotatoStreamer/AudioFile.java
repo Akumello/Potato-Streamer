@@ -1,6 +1,7 @@
 package swe.PotatoStreamer;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.farng.mp3.*;
@@ -55,8 +56,7 @@ public class AudioFile implements Runnable
 		    player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
 		    playState = PlayState.UNSTARTED;
 		    
-			bgPlayer = new Thread(this);
-		    bgPlayer.start();
+
 		} 
 		catch (IOException | TagException e) {
 			// TODO Auto-generated catch block
@@ -67,13 +67,50 @@ public class AudioFile implements Runnable
 		}
 	}
 	
+	private void refreshPlayer()
+	{
+		try {
+			in = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			player.close();
+			player = null;
+			player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bgPlayer = new Thread(this);
+	}
+	
 	public void play()
 	{
 		switch (playState)
 		{
 		case UNSTARTED:
+			Thread bgPlayer = new Thread(this);
+			FileInputStream in = null;
+			try {
+				in = new FileInputStream(this.path);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+		    AdvancedPlayer player;
+			try {
+				player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
+			} catch (JavaLayerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
 			playState = PlayState.PLAYING;
-			//player.notify();
+			refreshPlayer();
+		    bgPlayer.start();
 			break;
 		case PLAYING:
 			player.stop();
@@ -87,12 +124,13 @@ public class AudioFile implements Runnable
 		}
 	}
 	
-	public void pause()
+	public void stop(AdvancedPlayer player)
 	{
 		// Nothing is playing to be paused
 		if(playState != PlayState.PLAYING) return;
 		
 		player.stop();
+		player.close();
 		playState = PlayState.PAUSED;
 	}
 
@@ -114,7 +152,6 @@ public class AudioFile implements Runnable
 	    {
 		    try
 		    {
-		    	//player.wait();
 		    	player.play();
 			} catch (JavaLayerException e) {// | InterruptedException e) {
 				e.printStackTrace();
