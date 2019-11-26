@@ -12,6 +12,7 @@ import javazoom.jl.player.advanced.*;
 public class AudioFile implements Runnable
 {
 	int id;
+	private Media song;
 	String title;
 	String artist;
 	String album;
@@ -21,14 +22,17 @@ public class AudioFile implements Runnable
 	FileInputStream in = null;
     AdvancedPlayer player = null;
 	
+    public AudioFile(MP3File file) {
+    	this.file = file;
+    }
 	public AudioFile(String path)
 	{
 		try {
 			file = new MP3File(path);
 			this.path = path;
-			title = file.getID3v1Tag().getTitle();
-			album = file.getID3v1Tag().getAlbum();
-			artist = file.getID3v1Tag().getArtist();
+			song.setName(file.getID3v1Tag().getTitle());
+			song.setAlbum(file.getID3v1Tag().getAlbum());
+			song.setArtist(file.getID3v1Tag().getArtist());
 			in = new FileInputStream(path);
 		    player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
 			
@@ -65,4 +69,5 @@ public class AudioFile implements Runnable
 			e.printStackTrace();
 		}
 	}
+	
 }

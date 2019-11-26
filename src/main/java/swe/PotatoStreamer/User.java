@@ -11,6 +11,10 @@ public class User {
 		this.pwd = pwd;
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setId(String id)
 	{
 		this.id = id;

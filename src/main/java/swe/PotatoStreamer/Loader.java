@@ -1,8 +1,10 @@
 package swe.PotatoStreamer;
 import java.io.*;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.farng.mp3.MP3File;
+import org.farng.mp3.TagException;
 
 
 @SuppressWarnings("unused")
@@ -11,8 +13,9 @@ public class Loader {
 	 * shell class to manage upload/download to/from server
 	 */
 	
-	public Loader() {
-		
+	private DBInteract conn = null;
+	public Loader() throws SQLException {
+		conn.makeConn();
 	}
 	
 	/**
@@ -22,14 +25,34 @@ public class Loader {
 	 * @param file
 	 * @return boolean indicating whether the upload was successful or not
 	 */
-	public static boolean uploadSong(AudioFile file, String username, String name, String artist, String album) throws SQLException {
+	public boolean uploadSong(AudioFile file, Media song) throws SQLException {
 		try {
-			Connection conn = DBInteract.makeConn();
-			DBInteract.addNewMusic(file.file.getMp3file(), username, name, artist, album);
+			conn.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getName(), song.getArtist(), song.getAlbum());
+			return true;
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
+	}
+	
+	public AudioFile downloadSong(Media song) throws IOException, TagException {
+		/**
+		 * song only needs to contain a username provided by the input
+		 */
+		AudioFile aF = null;
+		try {
+			File test = conn.getMusicFromUser(song);
+			MP3File file = new MP3File();
+			file.setMp3file(test);
+			aF = new AudioFile(file);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return aF;
+		
 	}
 }

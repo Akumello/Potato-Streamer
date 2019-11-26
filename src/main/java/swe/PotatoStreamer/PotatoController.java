@@ -23,7 +23,11 @@ public class PotatoController
 {	
 	User newUser = new User();
 	User existingUser = new User();
+	DBInteract conn = null;
 	private String result = "";
+	public PotatoController() throws SQLException {
+		conn.makeConn();
+	}
 	
     @RequestMapping(value = "/")
     public String testing(Model model)
@@ -31,16 +35,16 @@ public class PotatoController
     	//*/
        	try 
        	{
-    		DBInteract.makeConn();
-        	DBInteract.addUser("Michael", "password1");
-        	DBInteract.printAllUsers();
+    		conn.makeConn();
+        	conn.addUser("Michael", "password1");
+        	conn.printAllUsers();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     	
-    	if(DBInteract.authenticate("Michael", "password1"))
+    	if(conn.authenticate("Michael", "password1"))
     		System.out.println("Authentication successful!");
     	else
     		System.out.println("Unable to authenticate.");
@@ -58,7 +62,7 @@ public class PotatoController
     {
        	try 
        	{
-    		DBInteract.makeConn();
+    		conn.makeConn();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block
@@ -73,7 +77,7 @@ public class PotatoController
     @PostMapping("/home")
     public String homeLogic(@ModelAttribute("existingUser") User existingUser, Model model) throws SQLException {
     	
-    	if(DBInteract.authenticate(existingUser.getId(), existingUser.getPwd())) {
+    	if(conn.authenticate(existingUser.getId(), existingUser.getPwd())) {
     		return libraryRender(existingUser, model);
     	}
     	result = "Invalid login credentials.";
@@ -93,7 +97,7 @@ public class PotatoController
     @PostMapping("/register")
     public String registerLogic(@ModelAttribute("newUser") User newUser, Model model) throws SQLException
     {
-    	if(DBInteract.addUser(newUser.getId(), newUser.getPwd())) {
+    	if(conn.addUser(newUser.getId(), newUser.getPwd())) {
     		result = "Registration success! Return to login.";
     		model.addAttribute("result", result);
     	} else {
