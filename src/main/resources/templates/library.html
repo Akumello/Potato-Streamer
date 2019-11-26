@@ -3,6 +3,14 @@
 <head>
   <title>potatostreamer/library</title>
   <meta charset = "UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+  	table,th,tr,td
+  	{
+  		border: 1px solid black;
+  	}
+  </style>
 </head>
 <body>
   <h1>Audio Library</h1>
@@ -16,6 +24,26 @@
   </nav>
   <hr/>
   
-  <!-- <h3 th:text="'Hi, ' + ${user.id} + '!'" /> -->
+  <table>
+  	<tr>
+  		<th>Play</th>
+  		<th>Pause</th>
+  		<th>Track</th>
+  		<th>Title</th>
+  		<th>Artist</th>
+  		<th>Album</th>
+  	</tr>
+  	<tr th:each = "song: ${songs}">
+  		<!--<audio id="myAudio">
+  			<source src="${song.path}" type="audio/mpeg">
+  		</audio>
+  		<button onclick="playAudio()" type="button">Play</button>
+  		<button onclick="pauseAudio()" type="button">Pause</button>-->
+  		<td th:text="${song.track}"&nbsp;</td>
+  		<td th:text="${song.title}"&nbsp;</td>
+  		<td th:text="${song.artist}"&nbsp;</td>
+  		<td th:text="${song.album}"&nbsp;</td>
+  	</tr>
+  </table>
 </body>
 </html>

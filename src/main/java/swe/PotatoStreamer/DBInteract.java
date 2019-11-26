@@ -255,6 +255,48 @@ public class DBInteract{
 			System.out.println("User " + result.getString(1) + ":\t" + result.getString(2) + "\t\t" + result.getString(3));
 		}
 	}
+	
+	public static ArrayList<User> getUserArray() throws SQLException
+	{
+		ArrayList<User> users = new ArrayList<User>();
+		
+		// Form the query and execute it
+		String query = "select * from users";
+		PreparedStatement p = conn.prepareStatement(query);
+		ResultSet result = p.executeQuery();
+		
+		// Print the results of the executed query
+		while (result.next()) {
+			User user = new User();
+			user.setId(result.getString(2));
+			user.setPwd(result.getString(3));
+			users.add(user);
+		}
+		
+		return users;
+	}
+	
+	public static ArrayList<AudioFile> getMusicArray() throws SQLException
+	{
+		ArrayList<AudioFile> songs = new ArrayList<AudioFile>();
+		
+		// Form the query and execute it
+		String query = "select * from music_storage";
+		PreparedStatement p = conn.prepareStatement(query);
+		ResultSet result = p.executeQuery();
+		
+		// Print the results of the executed query
+		while (result.next()) {
+			AudioFile song = new AudioFile("");
+			song.setTitle(result.getString(2));
+			song.setArtist(result.getString(3));
+			song.setAlbum(result.getString(4));
+			//(result.getBlob(5));
+			songs.add(song);
+		}
+		
+		return songs;
+	}
 
     public static void setDB() throws SQLException{
         if (conn == null) return;

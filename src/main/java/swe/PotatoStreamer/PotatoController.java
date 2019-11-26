@@ -1,6 +1,7 @@
 package swe.PotatoStreamer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,14 +27,14 @@ public class PotatoController
 	private String result = "";
 	
     @RequestMapping(value = "/")
-    public String testing(Model model)
+    public String testing(Model model) throws InterruptedException
     {	
     	//*/
        	try 
        	{
     		DBInteract.makeConn();
         	DBInteract.addUser("Michael", "password1");
-        	DBInteract.printAllUsers();
+        	DBInteract.getUserArray();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block
@@ -48,7 +49,12 @@ public class PotatoController
     	//*/
     	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
-    	afile.play();
+    	//afile.play();
+    	//Thread.sleep(5000);
+    	//afile.play();
+    	//Thread.sleep(5000);
+    	
+    	
     	//*/
     	return homeRender(model);
     }
@@ -108,13 +114,21 @@ public class PotatoController
     @GetMapping("/library")
     public String libraryRender(@ModelAttribute User existingUser, Model model) throws SQLException
     {
+    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	AudioFile afile = new AudioFile(mp3Path);
+    	ArrayList<AudioFile> audioFiles = new ArrayList<AudioFile>();
+    	audioFiles.add(afile);
+    	model.addAttribute("audioFiles", audioFiles);
+    	
     	return "library";
-    }
+    }//
     
     // For returning to library after swapping pages
-    @RequestMapping(value = "/library")
-    public String libraryRedirect(@ModelAttribute User existingUser, Model model)
+    @PostMapping("/library")
+    public String libraryRedirect(@ModelAttribute User existingUser, Model model) throws SQLException
     {
+    	//model.addAttribute(DBInteract.getUserArray());
+    	
     	return "library";
     }
     
