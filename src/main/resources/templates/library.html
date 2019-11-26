@@ -23,21 +23,25 @@
     </ul>
   </nav>
   <hr/>
-  
+
+ 		<audio controls id="myAudio">
+  			<source src="/data/clash_clash_twirl.mp3" />
+  		</audio>
+
   <table>
   	<tr>
   		<th>Listen</th>
   		<th>Title</th>
   		<th>Artist</th>
   		<th>Album</th>
-  		<!--  <th>username</th>
-  		<th>pwd</th>-->
   	</tr>
   	<tr th:each = "song: ${audioFiles}">
   	
-  		<td><audio controls="controls" id="myAudio">
-  			<source src="" type="audio/mpeg"></source>
+  		<td><audio id="myAudio">
+  			<source src="${song.path}" type="audio/mpeg"></source>
   		</audio>
+  		<button onclick="playAudio()" type="button" th:action="@{/play}" method="post">Play</button>
+		<button onclick="pauseAudio()" type="button" th:action="@{/stop}">Stop</button> 
   		
   		<script>
   			var x = document.getElementById("myAudio"); 
@@ -50,6 +54,7 @@
   		 	 x.pause(); 
   			} 
   		</script></td>
+		
   		<td th:text="${song.title}"&nbsp;></td>
   		<td th:text="${song.artist}"&nbsp;></td>
   		<td th:text="${song.album}"&nbsp;></td>
