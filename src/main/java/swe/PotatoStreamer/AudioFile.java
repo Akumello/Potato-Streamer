@@ -17,10 +17,7 @@ public class AudioFile
 {
 	// Song metadata
 	int id;
-	private Media song;
-	String title;
-	String artist;
-	String album;
+	private AudioMedia song = null;
 	
 	// File properties
 	String path;
@@ -50,9 +47,9 @@ public class AudioFile
 
 	public AudioFile(String title, String artist, String album, String path)
 	{
-		this.title = title;
-		this.album = album;
-		this.artist = artist;
+		song.setName(title);
+		song.setAlbum(album);
+		song.setArtist(artist);
 		this.path = path;
 	}
     
@@ -76,21 +73,21 @@ public class AudioFile
 			if(file.hasID3v1Tag()) 
 			{
 				// Fill in song metadata properties
-				title = file.getID3v1Tag().getTitle();
-				album = file.getID3v1Tag().getAlbum();
-				artist = file.getID3v1Tag().getArtist();
+				song.setName(file.getID3v1Tag().getTitle());
+				song.setAlbum(file.getID3v1Tag().getAlbum());
+				song.setArtist(file.getID3v1Tag().getArtist());
 			}
 			else if(file.hasID3v2Tag())
 			{
-				title = file.getID3v2Tag().getSongTitle();
-				album = file.getID3v2Tag().getAlbumTitle();
-				artist = file.getID3v2Tag().getLeadArtist();
+				song.setName(file.getID3v2Tag().getSongTitle());
+				song.setAlbum(file.getID3v2Tag().getAlbumTitle());
+				song.setArtist(file.getID3v2Tag().getLeadArtist());
 			}
 			else { System.out.println("The mp3 file has no tags");}
 			
-			if(title.isEmpty()) title = "Unknown";
-			if(album.isEmpty()) album = "Unknown";
-			if(artist.isEmpty()) artist = "Unknown";
+			if(song.getName().isEmpty()) song.setName("Unknown");
+			if(song.getArtist().isEmpty()) song.setArtist("Unknown");
+			if(song.getAlbum().isEmpty()) song.setAlbum("Unknown");
 			
 		    //String uriString = new File(path).toURI().toString();
 			//in = new FileInputStream(path);
@@ -154,17 +151,6 @@ public class AudioFile
 	}
 	
 
-	public String getTitle() {
-		return title;
-	}
-
-	public String getArtist() {
-		return artist;
-	}
-
-	public String getAlbum() {
-		return album;
-	}
 
 	public String getPath() {
 		return path;
@@ -172,18 +158,6 @@ public class AudioFile
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-
-	public void setAlbum(String album) {
-		this.album = album;
 	}
 
 	public void setPath(String path) {

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javazoom.jl.decoder.JavaLayerException;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
@@ -127,7 +130,13 @@ public class PotatoController
     @RequestMapping(value = "/upload")
     public String uploadRender(Model model)
     {
-    	AudioFile newFile = new AudioFile("");
+    	AudioFile newFile = null;
+		try {
+			newFile = new AudioFile("");
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	model.addAttribute("myFile", newFile);
     	

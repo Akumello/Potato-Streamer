@@ -92,7 +92,7 @@ public class DBInteract {
 	 * RETRIEVING COMMANDS
 	 */
 
-	public File getMusicFromUser(Media song) throws SQLException {
+	public File getMusicFromUser(AudioMedia song) throws SQLException {
 		String query = "select song_name, song_artist, song_album, song_data from music_storage where username = "
 				+ song.getUsername();
 		prepStat = conn.prepareStatement(query);

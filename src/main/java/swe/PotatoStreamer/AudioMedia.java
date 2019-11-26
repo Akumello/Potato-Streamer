@@ -1,6 +1,6 @@
 package swe.PotatoStreamer;
 
-public class Media {
+public class AudioMedia {
 	/**
 	 * shell class to contain song information, should make things easier for upload/download
 	 */
@@ -9,7 +9,7 @@ public class Media {
 	private String song_artist;
 	private String song_album;
 
-	public Media(String user, String name, String artist, String album) {
+	public AudioMedia(String user, String name, String artist, String album) {
 		setUsername(user);
 		song_name = name;
 		song_artist = artist;

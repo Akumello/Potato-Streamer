@@ -25,7 +25,7 @@ public class Loader {
 	 * @param file
 	 * @return boolean indicating whether the upload was successful or not
 	 */
-	public boolean uploadSong(AudioFile file, Media song) throws SQLException {
+	public boolean uploadSong(AudioFile file, AudioMedia song) throws SQLException {
 		try {
 			conn.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getName(), song.getArtist(), song.getAlbum());
 			return true;
@@ -38,7 +38,7 @@ public class Loader {
 		
 	}
 	
-	public AudioFile downloadSong(Media song) throws IOException, TagException {
+	public AudioFile downloadSong(AudioMedia song) throws IOException, TagException {
 		/**
 		 * song only needs to contain a username provided by the input
 		 */
