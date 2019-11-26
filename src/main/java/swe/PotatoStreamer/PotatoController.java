@@ -3,7 +3,10 @@ package swe.PotatoStreamer;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 
 
 
+@SuppressWarnings("unused")
 @Controller
 public class PotatoController
 {	
@@ -25,6 +29,7 @@ public class PotatoController
 	User existingUser = new User();
 	DBInteract conn = null;
 	private String result = "";
+	Logger logger = LoggerFactory.getLogger(PotatoController.class);
     @RequestMapping(value = "/")
     public String testing(Model model)
     {	

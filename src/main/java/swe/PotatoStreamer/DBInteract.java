@@ -10,18 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.farng.mp3.*;
-
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.*;
 
 /**
  * Shell class to interact with and perform DB operations
  */
+@SuppressWarnings("unused")
 public class DBInteract{
   public final String dbname = "potatobase";
   public final String modify_user_stub = "update users set ";
   public final String modify_storage_stub = "update music_storage set";
+  Logger logger = LoggerFactory.getLogger(DBInteract.class);
 
   public Connection conn = null;
   public PreparedStatement prepStat = null;
@@ -238,7 +241,8 @@ public class DBInteract{
        * IMPORTANT: customize this to your user/password settings when operating on local machine
        * 
        */
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "password");
+      conn = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "password");
+      logger.error(conn.toString());
       if (conn != null){
       	System.out.println("Connection successful!");
         useDB();
