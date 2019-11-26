@@ -13,9 +13,9 @@ public class Loader {
 	 * shell class to manage upload/download to/from server
 	 */
 	
-	private DBInteract conn = null;
+	
 	public Loader() throws SQLException {
-		conn.makeConn();
+		DBInteract.makeConn();
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class Loader {
 	 */
 	public boolean uploadSong(AudioFile file, AudioMedia song) throws SQLException {
 		try {
-			conn.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getName(), song.getArtist(), song.getAlbum());
+			DBInteract.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getTitle(), song.getArtist(), song.getAlbum());
 			return true;
 			
 		} catch (Exception e) {
@@ -44,7 +44,7 @@ public class Loader {
 		 */
 		AudioFile aF = null;
 		try {
-			File test = conn.getMusicFromUser(song);
+			File test = DBInteract.getMusicFromUser(song);
 			MP3File file = new MP3File();
 			file.setMp3file(test);
 			aF = new AudioFile(file);
