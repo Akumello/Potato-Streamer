@@ -7,12 +7,13 @@ import java.io.IOException;
 
 import org.farng.mp3.*;
 
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.*;
 
+@SuppressWarnings("unused")
 public class AudioFile
 {
 	// Song metadata
