@@ -29,6 +29,10 @@ public class AudioMedia {
 		return song_album;
 	}
 	
+	public String getName() {
+		return song_name;
+	}
+	
 	public void setTitle(String s) {
 		song_name = s;
 	}
