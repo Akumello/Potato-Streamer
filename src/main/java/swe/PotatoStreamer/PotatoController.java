@@ -1,5 +1,6 @@
 package swe.PotatoStreamer;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 
 
@@ -27,31 +31,67 @@ public class PotatoController
 	private String result = "";
 	
     @RequestMapping(value = "/")
-    public String testing(Model model) throws InterruptedException
-    {	
-    	/*/
+    public String manuallyFillDatabase(Model model) throws Exception
+    {	    	
+    	// ########## ADD USERS ###############
        	try 
        	{
     		DBInteract.makeConn();
+        	DBInteract.addUser("John", "password");
         	DBInteract.addUser("Michael", "password1");
-        	DBInteract.getUserArray();
+        	DBInteract.addUser("Todd", "password2");
+        	DBInteract.addUser("Jeffrey", "password3");
+        	DBInteract.printAllUsers();
     	} catch (SQLException e) 
        	{
     		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     	
-    	if(DBInteract.authenticate("Michael", "password1"))
+    	// ########## AUTHENTICATION ###############
+    	if(DBInteract.authenticate("Todd", "password2"))
+    	{
+    		existingUser = DBInteract.getUser("Todd");
     		System.out.println("Authentication successful!");
+    	}
     	else
     		System.out.println("Unable to authenticate.");
     	
-    	String mp3Path = "/Users/Michael/Horizon.mp3";
-    	AudioFile afile = new AudioFile(mp3Path);
-    	//*/
     	
-    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	// ########## ADD MUSIC ###############
+    	String mp3Path = "/Users/Michael/01 Birds.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
+    	
+    	try {
+			DBInteract.addNewMusic(existingUser.getId(), afile.getTitle(), afile.getArtist(), afile.getAlbum(), afile.getPath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	String mp3Path2 = "/Users/Michael/02 Julie K.mp3";
+    	AudioFile afile2 = new AudioFile(mp3Path2);
+    	
+    	try {
+			DBInteract.addNewMusic(existingUser.getId(), afile2.getTitle(), afile2.getArtist(), afile2.getAlbum(), afile2.getPath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	String mp3Path3 = "/Users/Michael/03 CR Model.mp3";
+    	AudioFile afile3 = new AudioFile(mp3Path3);
+    	
+    	try {
+			DBInteract.addNewMusic(existingUser.getId(), afile3.getTitle(), afile3.getArtist(), afile3.getAlbum(), afile3.getPath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+
+    	
+    	
     	
     	
     	//*/
@@ -61,7 +101,7 @@ public class PotatoController
     @GetMapping("/home")
     public String homeRender(Model model) 
     {
-       	try 
+       	try
        	{
     		DBInteract.makeConn();
     	} catch (SQLException e) 
@@ -113,10 +153,11 @@ public class PotatoController
     @GetMapping("/library")
     public String libraryRender(@ModelAttribute User existingUser, Model model) throws SQLException
     {
-    	String mp3Path = "C:\\Users\\Horizon.mp3";
-    	AudioFile afile = new AudioFile(mp3Path);
-    	ArrayList<AudioFile> audioFiles = new ArrayList<AudioFile>();
-    	audioFiles.add(afile);
+    	ArrayList<AudioFile> audioFiles = DBInteract.getMusicArray(existingUser.getId());
+    	for (AudioFile audioFile : audioFiles) {
+			System.out.println(audioFile.getArtist() + " " + audioFile.getTitle() + " " + audioFile.getPath());
+		}
+    	
     	model.addAttribute("audioFiles", audioFiles);
     	
     	return "library";
@@ -130,13 +171,30 @@ public class PotatoController
     	
     	return "library";
     }
-    
-    @RequestMapping(value = "/upload")
+
+    @GetMapping(value = "/upload")
     public String uploadRender(Model model)
     {
-    	AudioFile newFile = new AudioFile("");
+    	return "upload";
+    }
+    
+    @PostMapping(value = "/upload")
+    public String uploadLogic(@RequestParam("myFile") MultipartFile uploaded, RedirectAttributes redirect)
+    {
+    	System.out.println("myFile = " + uploaded.getOriginalFilename());
+     File nefw = new File("");
+		//String filename = StringUtils.cleanPath(uploaded.getOriginalFilename());
     	
-    	model.addAttribute("myFile", newFile);
+    	//*/
+    	String mp3Path = uploaded.getOriginalFilename();
+    	AudioFile afile = new AudioFile(mp3Path);
+    	
+    	try {
+			DBInteract.addNewMusic(existingUser.getId(), afile.getTitle(), afile.getArtist(), afile.getAlbum(), afile.getPath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	return "upload";
     }

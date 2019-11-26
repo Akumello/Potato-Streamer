@@ -37,10 +37,18 @@ public class AudioFile
     	UNSTARTED,
     	PLAYING,
     	PAUSED,
-    	FINISHED
+    	FINISHED 
     };
     private static PlayState playState;
-	
+
+	public AudioFile(String title, String artist, String album, String path)
+	{
+		this.title = title;
+		this.album = album;
+		this.artist = artist;
+		this.path = path;
+	}
+    
 	public AudioFile(String path)
 	{
 		try
@@ -49,14 +57,30 @@ public class AudioFile
 			file = new MP3File(path);
 			this.path = path;
 			
-			// Fill in song metadata properties
-			title = file.getID3v1Tag().getTitle();
-			album = file.getID3v1Tag().getAlbum();
-			artist = file.getID3v1Tag().getArtist();
+			System.out.println(file.hasID3v2Tag());
 			
-		    String uriString = new File(path).toURI().toString();
+			if(file.hasID3v1Tag()) 
+			{
+				// Fill in song metadata properties
+				title = file.getID3v1Tag().getTitle();
+				album = file.getID3v1Tag().getAlbum();
+				artist = file.getID3v1Tag().getArtist();
+			}
+			else if(file.hasID3v2Tag())
+			{
+				title = file.getID3v2Tag().getSongTitle();
+				album = file.getID3v2Tag().getAlbumTitle();
+				artist = file.getID3v2Tag().getLeadArtist();
+			}
+			else { System.out.println("The mp3 file has no tags");}
+			
+			if(title.isEmpty()) title = "Unknown";
+			if(album.isEmpty()) album = "Unknown";
+			if(artist.isEmpty()) artist = "Unknown";
+			
+		    //String uriString = new File(path).toURI().toString();
 			//in = new FileInputStream(path);
-		    
+		     
 
 		} 
 		catch (IOException | TagException e) {
