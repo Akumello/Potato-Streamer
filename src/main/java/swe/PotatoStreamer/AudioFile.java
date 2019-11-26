@@ -87,7 +87,6 @@ public class AudioFile implements Runnable
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void pause()
 	{
 		// Nothing is playing to be paused
