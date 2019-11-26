@@ -2,7 +2,8 @@ package swe.PotatoStreamer;
 
 public class AudioMedia {
 	/**
-	 * shell class to contain song information, should make things easier for upload/download
+	 * shell class to contain song information, should make things easier for
+	 * upload/download
 	 */
 	private String username;
 	private String song_name;
@@ -20,23 +21,23 @@ public class AudioMedia {
 	public String getTitle() {
 		return song_name;
 	}
-	
+
 	public String getArtist() {
 		return song_artist;
 	}
-	
+
 	public String getAlbum() {
 		return song_album;
 	}
-	
+
 	public void setTitle(String s) {
 		song_name = s;
 	}
-	
+
 	public void setArtist(String s) {
 		song_artist = s;
 	}
-	
+
 	public void setAlbum(String s) {
 		song_album = s;
 	}

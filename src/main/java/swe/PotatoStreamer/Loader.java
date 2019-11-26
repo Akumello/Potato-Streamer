@@ -1,4 +1,5 @@
 package swe.PotatoStreamer;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,18 +7,16 @@ import java.sql.SQLException;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
 
-
 @SuppressWarnings("unused")
 public class Loader {
 	/**
 	 * shell class to manage upload/download to/from server
 	 */
-	
-	
+
 	public Loader() throws SQLException {
 		DBInteract.makeConn();
 	}
-	
+
 	/**
 	 * 
 	 * method to send a basic input audio file to the db
@@ -27,17 +26,18 @@ public class Loader {
 	 */
 	public boolean uploadSong(AudioFile file, AudioMedia song) throws SQLException {
 		try {
-			DBInteract.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getTitle(), song.getArtist(), song.getAlbum());
+			DBInteract.addNewMusic(file.file.getMp3file(), song.getUsername(), song.getTitle(), song.getArtist(),
+					song.getAlbum());
 			return true;
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
-	
+
 	public AudioFile downloadSong(AudioMedia song) throws IOException, TagException {
 		/**
 		 * song only needs to contain a username provided by the input
@@ -53,6 +53,6 @@ public class Loader {
 			e.printStackTrace();
 		}
 		return aF;
-		
+
 	}
 }

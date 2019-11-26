@@ -1,4 +1,5 @@
 package swe.PotatoStreamer;
+
 import java.io.File;
 
 import java.io.FileInputStream;
@@ -14,97 +15,83 @@ import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.*;
 
 @SuppressWarnings("unused")
-public class AudioFile
-{
+public class AudioFile {
 	// Song metadata
 	int id;
 	public AudioMedia song = null;
-	
+
 	// File properties
 	MP3File file = null;
-	
-	
-	// 
+
+	//
 	int pauseLoc = 0;
 	Thread bgPlayer;
 	FileInputStream in = null;
-    AdvancedPlayer player = null;
-	
-    public AudioFile(MP3File file) {
-    	this.file = file;
-    }
+	AdvancedPlayer player = null;
 
-    //AdvancedPlayer player = null;
-    
-    private enum PlayState
-    {
-    	UNSTARTED,
-    	PLAYING,
-    	PAUSED,
-    	FINISHED 
-    };
-    private static PlayState playState;
+	public AudioFile(MP3File file) {
+		this.file = file;
+	}
 
-	public AudioFile(String title, String artist, String album, String path)
-	{
+	// AdvancedPlayer player = null;
+
+	private enum PlayState {
+		UNSTARTED, PLAYING, PAUSED, FINISHED
+	};
+
+	private static PlayState playState;
+
+	public AudioFile(String title, String artist, String album, String path) {
 		song.setTitle(title);
 		song.setAlbum(album);
 		song.setArtist(artist);
 		song.setPath(path);
 	}
-    
 
-	public AudioFile(String path) throws JavaLayerException
-	{
-		try
-		{
-			//this.path = path
+	public AudioFile(String path) throws JavaLayerException {
+		try {
+			// this.path = path
 			file = new MP3File(path);
 			song.setPath(path);
 			song.setTitle(file.getID3v1Tag().getTitle());
 			song.setAlbum(file.getID3v1Tag().getAlbum());
 			song.setArtist(file.getID3v1Tag().getArtist());
 			in = new FileInputStream(path);
-		    player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
+			player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
 
-			
 			System.out.println(file.hasID3v2Tag());
-			
-			if(file.hasID3v1Tag()) 
-			{
+
+			if (file.hasID3v1Tag()) {
 				// Fill in song metadata properties
 				song.setTitle(file.getID3v1Tag().getTitle());
 				song.setAlbum(file.getID3v1Tag().getAlbum());
 				song.setArtist(file.getID3v1Tag().getArtist());
-			}
-			else if(file.hasID3v2Tag())
-			{
+			} else if (file.hasID3v2Tag()) {
 				song.setTitle(file.getID3v2Tag().getSongTitle());
 				song.setAlbum(file.getID3v2Tag().getAlbumTitle());
 				song.setArtist(file.getID3v2Tag().getLeadArtist());
+			} else {
+				System.out.println("The mp3 file has no tags");
 			}
-			else { System.out.println("The mp3 file has no tags");}
-			
-			if(song.getTitle().isEmpty()) song.setTitle("Unknown");
-			if(song.getArtist().isEmpty()) song.setArtist("Unknown");
-			if(song.getAlbum().isEmpty()) song.setAlbum("Unknown");
-			
-		    //String uriString = new File(path).toURI().toString();
-			//in = new FileInputStream(path);
-		     
 
-		} 
-		catch (IOException | TagException e) {
+			if (song.getTitle().isEmpty())
+				song.setTitle("Unknown");
+			if (song.getArtist().isEmpty())
+				song.setArtist("Unknown");
+			if (song.getAlbum().isEmpty())
+				song.setAlbum("Unknown");
+
+			// String uriString = new File(path).toURI().toString();
+			// in = new FileInputStream(path);
+
+		} catch (IOException | TagException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
-	public void play()
-	{
-		switch (playState)
-		{
+	public void play() {
+		switch (playState) {
 		case UNSTARTED:
 			FileInputStream in = null;
 			try {
@@ -114,7 +101,7 @@ public class AudioFile
 				e.printStackTrace();
 				return;
 			}
-		    AdvancedPlayer player;
+			AdvancedPlayer player;
 			try {
 				player = new AdvancedPlayer(in, FactoryRegistry.systemRegistry().createAudioDevice());
 			} catch (JavaLayerException e) {
@@ -123,24 +110,24 @@ public class AudioFile
 				return;
 			}
 			playState = PlayState.PLAYING;
-		    bgPlayer.start();
+			bgPlayer.start();
 			break;
 		case PLAYING:
-			//player.notify();
+			// player.notify();
 			break;
 		case PAUSED:
-			//bgPlayer.start();
+			// bgPlayer.start();
 			break;
 		default:
 			break;
 		}
 	}
-	
-	public void stop(AdvancedPlayer player)
-	{
+
+	public void stop(AdvancedPlayer player) {
 		// Nothing is playing to be paused
-		if(playState != PlayState.PLAYING) return;
-		
+		if (playState != PlayState.PLAYING)
+			return;
+
 		player.stop();
 		player.close();
 		playState = PlayState.PAUSED;
@@ -154,5 +141,4 @@ public class AudioFile
 		this.id = id;
 	}
 
-	
 }
