@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import org.farng.mp3.*;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.slf4j.LoggerFactory;
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
@@ -181,6 +184,7 @@ public class DBInteract{
 		return false;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 	public static void addNewMusic(File musicFile, String username, String song_name, String song_artist, String song_album)
@@ -328,6 +332,8 @@ public class DBInteract{
 =======
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     }
 
     public static void addNewMusic(File musicFile, int userID, String song_name, String song_artist, String song_album) throws Exception{
@@ -462,10 +468,13 @@ public class DBInteract{
 		while (result.next()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			System.out.println(result.getString(3));
 			songs.add(
 					new AudioFile(result.getString(3), result.getString(4), result.getString(5), result.getString(6)));
 =======
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 			AudioFile song = new AudioFile("");
@@ -475,6 +484,9 @@ public class DBInteract{
 			//(result.getBlob(5));
 			songs.add(song);
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
+=======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
@@ -483,6 +495,7 @@ public class DBInteract{
 		return songs;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	public static void useDB() throws SQLException {
@@ -523,6 +536,8 @@ public class DBInteract{
 	}
 
 =======
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     public static void setDB() throws SQLException{

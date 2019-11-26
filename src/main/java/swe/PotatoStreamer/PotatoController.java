@@ -55,6 +55,7 @@ public class PotatoController
     	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     	try {
 			DBInteract.addNewMusic(existingUser.getId(), afile.song.getTitle(), afile.song.getArtist(), afile.song.getAlbum(), afile.song.getPath());
 		} catch (Exception e) {
@@ -85,6 +86,10 @@ public class PotatoController
 
     	
     	
+=======
+    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	AudioFile afile = new AudioFile(mp3Path);
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
     	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
@@ -156,6 +161,7 @@ public class PotatoController
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     	ArrayList<AudioFile> audioFiles = DBInteract.getMusicArray(existingUser.getId());
     	for (AudioFile audioFile : audioFiles) {
 			System.out.println(audioFile.song.getArtist() + " " + audioFile.song.getTitle() + " " + audioFile.song.getPath());
@@ -164,11 +170,16 @@ public class PotatoController
 =======
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     	String mp3Path = "C:\\Users\\Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
     	ArrayList<AudioFile> audioFiles = new ArrayList<AudioFile>();
     	audioFiles.add(afile);
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
+=======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
@@ -191,6 +202,7 @@ public class PotatoController
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     	System.out.println("myFile = " + uploaded.getOriginalFilename());
      File nefw = new File("");
 		//String filename = StringUtils.cleanPath(uploaded.getOriginalFilename());
@@ -211,6 +223,11 @@ public class PotatoController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+=======
+    	AudioFile newFile = new AudioFile("");
+    	
+    	model.addAttribute("myFile", newFile);
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
     	AudioFile newFile = new AudioFile("");
     	
