@@ -143,11 +143,11 @@ public class DBInteract{
 		return false;
     }
 
-    public static void addNewMusic(File musicFile, int userID, String song_name, String song_artist, String song_album) throws Exception{
+    public static void addNewMusic(File musicFile, String username, String song_name, String song_artist, String song_album) throws Exception{
         FileInputStream input = new FileInputStream(musicFile);
-        String query = "insert into `music_storage` (`user_id`, `song_name`, `song_artist`, `song_album`, `song_data`) values (?, ?, ?, ?, ?)";
+        String query = "insert into `music_storage` (`username`, `song_name`, `song_artist`, `song_album`, `song_data`) values (?, ?, ?, ?, ?)";
         prepStat = conn.prepareStatement(query);
-        prepStat.setInt(1, userID);
+        prepStat.setString(1, username);
         prepStat.setString(2, song_name);
         prepStat.setString(3, song_artist);
         prepStat.setString(4, song_album);
@@ -285,7 +285,7 @@ public class DBInteract{
         String createdb = "create database potatobase";
         String setdb = "use potatobase";
         String create_user_table = "create table users( user_id int not null auto_increment, username varchar(100) not null unique, pwd varchar(100) not null, user_cdate date,primary key (user_id))";
-        String create_music_table = "create table music_storage(song_id int not null auto_increment, song_name varchar(100) not null, song_artist varchar(100) not null, song_album varchar(100) not null, song_data blob not null, primary key (song_id))";
+        String create_music_table = "create table music_storage(song_id int not null auto_increment, username varchar(100) not null, song_name varchar(100) not null, song_artist varchar(100) not null, song_album varchar(100) not null, song_data blob not null, primary key (song_id), foreign key(username))";
        
         prepStat = conn.prepareStatement(createdb);
         prepStat.execute();
