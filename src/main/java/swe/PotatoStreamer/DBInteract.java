@@ -12,7 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.farng.mp3.*;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.slf4j.LoggerFactory;
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 =======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 
@@ -177,6 +180,7 @@ public class DBInteract{
 		}
 		return false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 	public static void addNewMusic(File musicFile, String username, String song_name, String song_artist, String song_album)
@@ -322,6 +326,8 @@ public class DBInteract{
 
 	public static void printAllUsers() throws SQLException {
 =======
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     }
 
     public static void addNewMusic(File musicFile, int userID, String song_name, String song_artist, String song_album) throws Exception{
@@ -455,22 +461,29 @@ public class DBInteract{
 		// Print the results of the executed query
 		while (result.next()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			System.out.println(result.getString(3));
 			songs.add(
 					new AudioFile(result.getString(3), result.getString(4), result.getString(5), result.getString(6)));
 =======
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 			AudioFile song = new AudioFile("");
 			song.setTitle(result.getString(2));
 			song.setArtist(result.getString(3));
 			song.setAlbum(result.getString(4));
 			//(result.getBlob(5));
 			songs.add(song);
+<<<<<<< HEAD
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
+=======
 >>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
 		}
 
 		return songs;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	public static void useDB() throws SQLException {
 		if (conn == null)
@@ -510,6 +523,8 @@ public class DBInteract{
 	}
 
 =======
+=======
+>>>>>>> parent of 67ae582... Created Fill Database to fill the database without db functions
     public static void setDB() throws SQLException{
         if (conn == null) return;
         String query = "set database swe_proj";
