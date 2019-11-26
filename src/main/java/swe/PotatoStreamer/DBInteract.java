@@ -155,34 +155,6 @@ public class DBInteract{
         prepStat.executeQuery();
     }
 
-    /**
-     * 
-     * Modifying table commands
-     * 
-     */
-
-    public static void updateUserFName(String newName, String oldName) throws SQLException{
-
-        String query = "".concat(modify_user_stub).concat("user_fname = ").concat(newName).concat(" where user_fname = ").concat(oldName);
-        prepStat = conn.prepareStatement(query);
-        prepStat.executeQuery();
-    }
-
-    public static void updateUserLName(String newName, String oldName) throws SQLException{
-
-        String query = "".concat(modify_user_stub).concat("user_lname = ").concat(newName).concat(" where user_lname = ").concat(oldName);
-        prepStat = conn.prepareStatement(query);
-        prepStat.executeQuery();
-    }
-
-    public static void updatePwd(String newPwd, String oldPwd) throws SQLException{
-
-        String query = "".concat(modify_user_stub).concat("pwd = ").concat(newPwd).concat(" where pwd = ").concat(oldPwd);
-        prepStat = conn.prepareStatement(query);
-        prepStat.executeQuery();
-    }
-
-
 
     /**
      * 

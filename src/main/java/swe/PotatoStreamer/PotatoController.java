@@ -29,7 +29,7 @@ public class PotatoController
     @RequestMapping(value = "/")
     public String testing(Model model) throws InterruptedException
     {	
-    	//*/
+    	/*/
        	try 
        	{
     		DBInteract.makeConn();
@@ -46,14 +46,12 @@ public class PotatoController
     	else
     		System.out.println("Unable to authenticate.");
     	
-    	//*/
     	String mp3Path = "/Users/Michael/Horizon.mp3";
     	AudioFile afile = new AudioFile(mp3Path);
-    	afile.play();
-    	Thread.sleep(5000);
-    	afile.stop();
-    	Thread.sleep(2000);
-    	afile.play();
+    	//*/
+    	
+    	String mp3Path = "/Users/Michael/Horizon.mp3";
+    	AudioFile afile = new AudioFile(mp3Path);
     	
     	
     	//*/
