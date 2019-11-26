@@ -18,10 +18,9 @@ public class AudioFile
 {
 	// Song metadata
 	int id;
-	private AudioMedia song = null;
+	public AudioMedia song = null;
 	
 	// File properties
-	String path;
 	MP3File file = null;
 	
 	
@@ -48,10 +47,10 @@ public class AudioFile
 
 	public AudioFile(String title, String artist, String album, String path)
 	{
-		song.setName(title);
+		song.setTitle(title);
 		song.setAlbum(album);
 		song.setArtist(artist);
-		this.path = path;
+		song.setPath(path);
 	}
     
 
@@ -61,8 +60,8 @@ public class AudioFile
 		{
 			//this.path = path
 			file = new MP3File(path);
-			this.path = path;
-			song.setName(file.getID3v1Tag().getTitle());
+			song.setPath(path);
+			song.setTitle(file.getID3v1Tag().getTitle());
 			song.setAlbum(file.getID3v1Tag().getAlbum());
 			song.setArtist(file.getID3v1Tag().getArtist());
 			in = new FileInputStream(path);
@@ -74,19 +73,19 @@ public class AudioFile
 			if(file.hasID3v1Tag()) 
 			{
 				// Fill in song metadata properties
-				song.setName(file.getID3v1Tag().getTitle());
+				song.setTitle(file.getID3v1Tag().getTitle());
 				song.setAlbum(file.getID3v1Tag().getAlbum());
 				song.setArtist(file.getID3v1Tag().getArtist());
 			}
 			else if(file.hasID3v2Tag())
 			{
-				song.setName(file.getID3v2Tag().getSongTitle());
+				song.setTitle(file.getID3v2Tag().getSongTitle());
 				song.setAlbum(file.getID3v2Tag().getAlbumTitle());
 				song.setArtist(file.getID3v2Tag().getLeadArtist());
 			}
 			else { System.out.println("The mp3 file has no tags");}
 			
-			if(song.getName().isEmpty()) song.setName("Unknown");
+			if(song.getTitle().isEmpty()) song.setTitle("Unknown");
 			if(song.getArtist().isEmpty()) song.setArtist("Unknown");
 			if(song.getAlbum().isEmpty()) song.setAlbum("Unknown");
 			
@@ -109,7 +108,7 @@ public class AudioFile
 		case UNSTARTED:
 			FileInputStream in = null;
 			try {
-				in = new FileInputStream(this.path);
+				in = new FileInputStream(song.getPath());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -150,19 +149,10 @@ public class AudioFile
 	public int getId() {
 		return id;
 	}
-	
-
-
-	public String getPath() {
-		return path;
-	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
-	}
 	
 }

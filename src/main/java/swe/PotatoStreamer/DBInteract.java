@@ -26,7 +26,7 @@ import org.slf4j.*;
 @SuppressWarnings("unused")
 public class DBInteract {
 
-	Logger logger = LoggerFactory.getLogger(DBInteract.class);
+	static Logger logger = LoggerFactory.getLogger(DBInteract.class);
 	public static final String dbname = "potatobase";
 	public static final String modify_user_stub = "update users set ";
 	public static final String modify_storage_stub = "update music_storage set";
@@ -44,7 +44,7 @@ public class DBInteract {
 	 */
 
 	// ##################
-	public boolean authenticate(String username, String pwd) {
+	public static boolean authenticate(String username, String pwd) {
 		// Query to retrieve the users password from the potatobase
 		String sql = "select pwd from users where username = ?";
 
@@ -75,14 +75,14 @@ public class DBInteract {
 	 * DELETE COMMANDS
 	 */
 
-	public void deleteUser(String username) throws SQLException {
+	public static void deleteUser(String username) throws SQLException {
 		String sql = "delete from users where username = ?";
 		prepStat = conn.prepareStatement(sql);
 		prepStat.setString(1, username);
 		prepStat.executeQuery();
 	}
 
-	public void deleteSong(int song_id) throws SQLException {
+	public static void deleteSong(int song_id) throws SQLException {
 		String sql = "delete from music_storage where song_id = " + Integer.toString(song_id);
 		prepStat = conn.prepareStatement(sql);
 		prepStat.executeQuery();
@@ -92,18 +92,18 @@ public class DBInteract {
 	 * RETRIEVING COMMANDS
 	 */
 
-	public File getMusicFromUser(AudioMedia song) throws SQLException {
+	public static File getMusicFromUser(AudioMedia song) throws SQLException {
 		String query = "select song_name, song_artist, song_album, song_data from music_storage where username = "
 				+ song.getUsername();
 		prepStat = conn.prepareStatement(query);
 		ResultSet res = prepStat.executeQuery();
 		File audio = null;
 		while (res.next()) {
-			song.setName(res.getString("song_name"));
+			song.setTitle(res.getString("song_name"));
 			song.setArtist(res.getString("song_artist"));
 			song.setAlbum(res.getString("song_album"));
 
-			audio = new File(song.getName());
+			audio = new File(song.getTitle());
 			try (FileOutputStream fos = new FileOutputStream(audio)) {
 				byte[] buffer = new byte[1024];
 
@@ -123,7 +123,7 @@ public class DBInteract {
 	 * ADDING COMMANDS
 	 */
 
-	public boolean addUser(String username, String pwd) throws SQLException {
+	public static boolean addUser(String username, String pwd) throws SQLException {
 		PreparedStatement p;
 
 		if (conn != null) {
@@ -145,7 +145,7 @@ public class DBInteract {
 		return false;
 	}
 
-	public void addNewMusic(File musicFile, String username, String song_name, String song_artist, String song_album)
+	public static void addNewMusic(File musicFile, String username, String song_name, String song_artist, String song_album)
 			throws Exception {
 		FileInputStream input = new FileInputStream(musicFile);
 		String query = "insert into `music_storage` (`username`, `song_name`, `song_artist`, `song_album`, `song_data`) values (?, ?, ?, ?, ?)";
@@ -164,7 +164,7 @@ public class DBInteract {
 	 * 
 	 */
 
-	public void updateUserFName(String newName, String oldName) throws SQLException {
+	public static void updateUserFName(String newName, String oldName) throws SQLException {
 
 		String query = "".concat(modify_user_stub).concat("user_fname = ").concat(newName)
 				.concat(" where user_fname = ").concat(oldName);
@@ -172,7 +172,7 @@ public class DBInteract {
 		prepStat.executeQuery();
 	}
 
-	public void updateUserLName(String newName, String oldName) throws SQLException {
+	public static void updateUserLName(String newName, String oldName) throws SQLException {
 
 		String query = "".concat(modify_user_stub).concat("user_lname = ").concat(newName)
 				.concat(" where user_lname = ").concat(oldName);
@@ -180,7 +180,7 @@ public class DBInteract {
 		prepStat.executeQuery();
 	}
 
-	public void updatePwd(String newPwd, String oldPwd) throws SQLException {
+	public static void updatePwd(String newPwd, String oldPwd) throws SQLException {
 
 		String query = "".concat(modify_user_stub).concat("pwd = ").concat(newPwd).concat(" where pwd = ")
 				.concat(oldPwd);
@@ -194,7 +194,7 @@ public class DBInteract {
 	 * 
 	 */
 
-	public int getUserID(String user_fname, String user_lname) throws SQLException {
+	public static int getUserID(String user_fname, String user_lname) throws SQLException {
 		String query = "select user_id from users where user_fname = " + user_fname + " and user_lname = " + user_lname;
 		prepStat = conn.prepareStatement(query);
 		ResultSet res = prepStat.executeQuery();
@@ -202,7 +202,7 @@ public class DBInteract {
 		return uid;
 	}
 
-	public int getSongID(int user_id) throws SQLException {
+	public static int getSongID(int user_id) throws SQLException {
 		String sql = "select song_id from music_storage where user_id = " + user_id;
 		prepStat = conn.prepareStatement(sql);
 		ResultSet r = prepStat.executeQuery();
@@ -210,7 +210,7 @@ public class DBInteract {
 		return sid;
 	}
 
-	public Connection makeConn() throws SQLException {
+	public static Connection makeConn() throws SQLException {
 		Connection conn = null;
 		if (conn != null) {
 			System.out.println("We are already connected to the database.");
@@ -286,7 +286,7 @@ public class DBInteract {
 		prepStat.executeUpdate();
 	}
 
-	public void printAllUsers() throws SQLException {
+	public static void printAllUsers() throws SQLException {
 		// Form the query and execute it
 		String query = "select * from users";
 		PreparedStatement p = conn.prepareStatement(query);
@@ -300,7 +300,7 @@ public class DBInteract {
 		}
 	}
 
-	public void setDB() throws SQLException {
+	public static void setDB() throws SQLException {
 		if (conn == null)
 			return;
 		String query = "set database swe_proj";
